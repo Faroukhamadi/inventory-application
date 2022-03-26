@@ -6,32 +6,31 @@ html
     link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous")
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body
     script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous") 
-    .container 
-      .row.no-gutters
-        .col-6.col-md-4
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
-          p hello1
+  body
+  - let values = [];
+    .container
+      .row
+        .col-6.col-md-4.mt-5
+          ul.list-group.list-group-flush
+            li.list-group-item.fw-bold
+              a(href="/")  Home
+            li.list-group-item.fw-bold Database Operations
+            li.list-group-item.fw-normal
+              a(href="#")  Create Category
+            li.list-group-item.fw-normal
+              a(href="#")  Add Product
+            li.list-group-item.fw-bold Categories
+              if data
+                each category in data.categories 
+                  values.push(category.name)
+                  li.list-group-item.fw-normal 
+                    a(href=category.url) #{category.name}
+              else 
+                each category in values 
+                  li.list-group-item.fw-normal 
+                    a(href=category.url) #{category.name}
+                  
+
         .col-12.col-sm-6.col-md-8
           block content
-    
