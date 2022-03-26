@@ -33,7 +33,25 @@ exports.category_detail = (req, res, next) => {
 };
 
 exports.category_create_get = (req, res, next) => {
-  res.render('category_form', { title: 'Create Category' });
+  async.parallel(
+    {
+      categories: (callback) => {
+        Category.find({}, callback);
+      },
+    },
+    (err, results) => {
+      if (err) return next(err);
+      if (results.categories === null) {
+        let err = new Error('Category list not found');
+        err.status = 404;
+        return next(err);
+      }
+      res.render('category_form', {
+        title: 'Create Category',
+        data: results,
+      });
+    }
+  );
 };
 
 exports.category_create_post = [
