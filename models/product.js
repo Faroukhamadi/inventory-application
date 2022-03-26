@@ -5,6 +5,8 @@ const ProductSchema = new Schema({
   name: { type: String, minlength: 3, maxlength: 20, required: true },
   description: { type: String, minlength: 3, maxlength: 500, required: true },
   category: { type: Schema.Types.ObjectId, ref: 'Category' },
+  price: { type: Number, required: true },
+  quantity: { type: Number, required: true },
 });
 
 ProductSchema.virtual('url').get(function () {

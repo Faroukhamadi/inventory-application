@@ -8,6 +8,9 @@ exports.category_detail = (req, res, next) => {
       categories: (callback) => {
         Category.find({}, callback);
       },
+      products: (callback) => {
+        Product.find({ category: req.params.id }, callback);
+      },
       categoryDetail: (callback) => {
         Category.findById(req.params.id, callback);
       },

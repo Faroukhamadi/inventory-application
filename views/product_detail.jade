@@ -1,0 +1,12 @@
+extends layout
+
+block content 
+  if err 
+    p #{err}
+  else
+    h1.display-2 #{data.productDetail.name}
+    h1.display-6 ID
+    p.lead #{data.productDetail._id}
+    h1.display-6 Description 
+    p.lead #{data.productDetail.description}
+    

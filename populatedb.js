@@ -41,11 +41,13 @@ function categoryCreate(name, description, cb) {
   });
 }
 
-function productCreate(name, description, category, cb) {
+function productCreate(name, description, category, price, quantity, cb) {
   const product = new Product({
     name: name,
     description: description,
     category: category,
+    price: price,
+    quantity: quantity,
   });
 
   product.save(function (err) {
@@ -97,11 +99,14 @@ function createProductsCategories(cb) {
           callback
         );
       },
+
       function (callback) {
         productCreate(
           'iPhone 12 Pro',
           'Includes a brand new, generic charging cable that is certified Mfi (Made for iPhone) and a brand new, generic wall plug',
           categories[0],
+          800,
+          34,
           callback
         );
       },
@@ -110,6 +115,8 @@ function createProductsCategories(cb) {
           'iPhone 13 Pro',
           'Includes a brand new, generic charging the wall with very efficient technologies specified for the job',
           categories[1],
+          1099,
+          120,
           callback
         );
       },
@@ -118,6 +125,8 @@ function createProductsCategories(cb) {
           'iPhone X ',
           'Includes amazing features with fast charging capabilities that are amazingly crafted by our apple hard-working employees',
           categories[2],
+          400,
+          230,
           callback
         );
       },

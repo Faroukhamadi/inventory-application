@@ -1,4 +1,20 @@
 extends layout
 
 block content
-  h1 Hello
+  if err 
+    p #{err} 
+  else 
+    h1.display-2 #{data.categoryDetail.name}
+    h1.display-6 ID
+    p.lead #{data.categoryDetail._id}
+    h1.display-6 Description
+    p.lead #{data.categoryDetail.description}
+    h1.display-6 Items
+    if data.products.length
+      each product in data.products 
+        ul 
+          li.lead.mb-3 
+            a(href=product.url).text-decoration-none  name: #{product.name}
+          li.lead.mb-5 description: #{product.description}
+    else
+      p.lead No items in this category

@@ -23,9 +23,35 @@ exports.index = (req, res, next) => {
         return next(err);
       }
       res.render('index', {
-        title: 'Farouk Shop Home',
-        err: err,
+        title: "Farouk's Shop Home",
         data: results,
+        err: err,
+      });
+    }
+  );
+};
+
+exports.product_detail = (req, res, next) => {
+  async.parallel(
+    {
+      categories: (callback) => {
+        Category.find({}, callback);
+      },
+      productDetail: (callback) => {
+        Product.findById(req.params.id, callback);
+      },
+    },
+    (err, results) => {
+      if (err) return next(err);
+      if (results.productDetail === null) {
+        let err = new Error('Product not found');
+        err.status = 404;
+        return next(err);
+      }
+      res.render('product_detail', {
+        title: 'Product detail',
+        data: results,
+        err: err,
       });
     }
   );
