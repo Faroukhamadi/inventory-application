@@ -5,20 +5,20 @@ block content
 
   form(action="", method="POST") 
     .form-group 
-      label(for="name") Name:
-      input#name.form-control(type="text", placeholder="Product Name", name="name", value=(undefined===product ? '' : product.name))
+      label(for="name").lead Name:
+      input#name.form-control.mb-3(type="text", placeholder="Product Name", name="name", value=(undefined===product ? '' : product.name))
       
-      label(for="description") Description:
-      input#description.form-control(type="text", placeholder="Product Description", name="description", value=(undefined===product ? '' : product.description))
+      label(for="description").lead Description:
+      input#description.form-control.mb-3(type="text", placeholder="Product Description", name="description", value=(undefined===product ? '' : product.description))
       
-      label(for="price") Price:
-      input#price.form-control(type="text", placeholder="Product Price", name="price", value=(undefined===product ? '' : product.price))
+      label(for="price").lead Price:
+      input#price.form-control.mb-3(type="text", placeholder="Product Price", name="price", value=(undefined===product ? '' : product.price))
 
-      label(for="quantity") Quantity:
-      input#quantity.form-control(type="text", placeholder="Product Quantity", name="quantity", value=(undefined===product ? '' : product.quantity))
+      label(for="quantity").lead Quantity:
+      input#quantity.form-control.mb-3(type="text", placeholder="Product Quantity", name="quantity", value=(undefined===product ? '' : product.quantity))
 
-      label(for="category") Category:
-      select#category.form-control(type="select", placeholder="Select Category", name="category", required="true")
+      label(for="category").lead Category:
+      select#category.form-control.mb-3(type="select", placeholder="Select Category", name="category", required="true")
         each category in category_list 
           option(value=category._id, selected=(selected_category==category._id.toString() ? 'selected' : false)) #{category.name}
     

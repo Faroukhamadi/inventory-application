@@ -4,8 +4,16 @@ body {
 
 a {
   color: #00b7ff;
+  text-decoration: none;
 }
 
 .list-group.list-group-flush {
   list-style-type: none;
+}
+
+#description {
+  height: 200px;
+  word-break: break-word;
+  text-align: start;
+  overflow: auto;
 }

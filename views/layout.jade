@@ -26,6 +26,11 @@ html
                   values.push(category.name)
                   li.list-group-item.fw-normal 
                     a(href=category.url) #{category.name}
+              else if category_list 
+                each category in category_list 
+                  values.push(category.name)
+                  li.list-group-item.fw-normal 
+                    a(href=category.url) #{category.name}
               else 
                 each category in values 
                   li.list-group-item.fw-normal 
