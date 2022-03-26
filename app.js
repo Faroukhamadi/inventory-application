@@ -5,10 +5,16 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const indexRouter = require('./routes/index');
+const compression = require('compression');
+const helmet = require('helmet');
 
 const app = express();
-const MongoDB =
+app.use(helmet());
+
+const dev_db_url =
   'mongodb+srv://faroukhamadi:16042002farouk@cluster0.fr3yi.mongodb.net/inventory_application?retryWrites=true&w=majority';
+
+const MongoDB = process.env.MONGODB_URI || dev_db_url;
 
 mongoose.connect(MongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
@@ -22,6 +28,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
