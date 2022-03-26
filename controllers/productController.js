@@ -10,7 +10,11 @@ exports.index = (req, res, next) => {
         Category.find({}, callback).count();
       },
       product_count: (callback) => {
-        Product.find({}, callback).count();
+        // Product.find({}, callback).count();
+        Product.aggregate(
+          [{ $group: { _id: null, quantity: { $sum: '$quantity' } } }],
+          callback
+        );
       },
       categories: (callback) => {
         Category.find({}, callback);

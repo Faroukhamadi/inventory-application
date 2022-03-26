@@ -6,5 +6,5 @@ block content
   if err 
     p error: #{err}
   h1.display-6 Number of categories: #{data.category_count} 
-  h1.display-6 Number of products: #{data.product_count}
+  h1.display-6 Number of products: #{data.product_count[0].quantity}
   p 
