@@ -210,3 +210,30 @@ exports.product_update_post = [
     }
   },
 ];
+
+exports.product_delete_get = (req, res, next) => {
+  Product.findById(req.params.id).exec((err, product) => {
+    if (err) return next(err);
+    if (product === null) {
+      // no results
+      res.redirect('/');
+    }
+    // Successful, so render
+    res.render('product_delete', {
+      title: 'Delete Product',
+      product: product,
+    });
+  });
+};
+
+exports.product_delete_post = (req, res, next) => {
+  Product.findById(req.params.id).exec((err, product) => {
+    if (err) return next(err);
+    // Success
+    Product.findByIdAndRemove(req.body.productid, (err) => {
+      if (err) return next(err);
+      // Success - go to home page
+      res.redirect('/');
+    });
+  });
+};

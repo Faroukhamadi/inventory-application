@@ -215,7 +215,7 @@ exports.category_delete_post = (req, res, next) => {
         Category.findById(req.body.categoryid).exec(callback);
       },
       categorys_products: (callback) => {
-        Product.find({ category: req.params.body.categoryid }).exec(callback);
+        Product.find({ category: req.body.categoryid }).exec(callback);
       },
     },
     (err, results) => {
