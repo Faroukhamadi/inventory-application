@@ -124,3 +124,89 @@ exports.product_create_post = [
     }
   },
 ];
+
+exports.product_update_get = (req, res, next) => {
+  async.parallel(
+    {
+      categories: (callback) => {
+        Category.find(callback);
+      },
+      product: (callback) => {
+        Product.findById(req.params.id).populate('category').exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) return next(err);
+      if (results.product === null) {
+        let err = new Error('Product not found');
+        err.status = 404;
+        return next(err);
+      }
+      res.render('product_form', {
+        title: 'Update Product',
+        data: results,
+        selected_category: results.product.category._id,
+        category_list: results.categories,
+      });
+    }
+  );
+};
+
+exports.product_update_post = [
+  // Validate and sanitize fields
+  body('name', 'Name must be specified.').trim().isLength({ min: 1 }).escape(),
+  body('description')
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage('Description must be specified.')
+    .isLength({ min: 3 })
+    .isLength({ max: 500 })
+    .withMessage(
+      'Description must have a minimum length of 3 and a maximum length of 500'
+    ),
+  (req, res, next) => {
+    // Extract the validation errors from a request
+    const errors = validationResult(req);
+
+    // Create a product object with escaped/trimmed data and old id
+    const product = new Product({
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+      quantity: req.body.quantity,
+      category: req.body.category,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render form again with sanitized values/error messages
+
+      // Get all categories for form
+      Category.find({}, 'name').exec((err, categories) => {
+        if (err) return next(err);
+        // Successful so render
+
+        res.render('product_form', {
+          title: 'Update Product',
+          category_list: categories,
+          selected_category: product.category._id,
+          errors: errors.array(),
+          product: product,
+        });
+      });
+      return;
+    } else {
+      // Data from form is valid, update the record
+      Product.findByIdAndUpdate(
+        req.params.id,
+        product,
+        {},
+        (err, theproduct) => {
+          if (err) return next(err);
+          // Successful - redirect to product detail page
+          res.redirect(theproduct.url);
+        }
+      );
+    }
+  },
+];
