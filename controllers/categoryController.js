@@ -175,4 +175,69 @@ exports.category_update_post = [
     }
   },
 ];
-// 623e8609aa48b7b5103ba2ce
+
+exports.category_delete_get = (req, res, next) => {
+  async.parallel(
+    {
+      categories: (callback) => {
+        Category.find({}, callback);
+      },
+      category: (callback) => {
+        Category.findById(req.params.id).exec(callback);
+      },
+      categorys_products: (callback) => {
+        Product.find({ category: req.params.id }).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) return next(err);
+      if (results.category === null) {
+        res.redirect('/');
+      }
+      // Successful, so render
+      res.render('category_delete', {
+        title: 'Delete Category',
+        data: results,
+        category_products: results.categorys_products,
+        category: results.category,
+      });
+    }
+  );
+};
+
+exports.category_delete_post = (req, res, next) => {
+  async.parallel(
+    {
+      categories: (callback) => {
+        Category.find({}, callback);
+      },
+      category: (callback) => {
+        Category.findById(req.body.categoryid).exec(callback);
+      },
+      categorys_products: (callback) => {
+        Product.find({ category: req.params.body.categoryid }).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) return next(err);
+      // Success
+      if (results.categorys_products.length > 0) {
+        // Category has product. Render in same way as for GET route
+        res.render('category_delete', {
+          title: 'Delete category',
+          data: results,
+          category_products: results.categorys_products,
+          category: results.category,
+        });
+        return;
+      } else {
+        // Category has no products. Delete object and redirect to home page
+        Category.findByIdAndRemove(req.body.categoryid, (err) => {
+          if (err) return next(err);
+          // Success - go to home page
+          res.redirect('/');
+        });
+      }
+    }
+  );
+};
