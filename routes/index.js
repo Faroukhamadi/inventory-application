@@ -4,8 +4,8 @@ const category_controller = require('../controllers/categoryController');
 const product_controller = require('../controllers/productController');
 
 /// CATEGORY ROUTES ///
-// router.get('/category/create', category_controller.category_create_get);
-// router.post('/category/create', category_controller.category_create_post);
+router.get('/category/create', category_controller.category_create_get);
+router.post('/category/create', category_controller.category_create_post);
 
 // router.get('/category/:id/update', category_controller.category_update_get);
 // router.post('/category/:id/update', category_controller.category_update_post);
