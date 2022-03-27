@@ -1,3 +1,4 @@
+require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -11,10 +12,7 @@ const helmet = require('helmet');
 const app = express();
 app.use(helmet());
 
-const dev_db_url =
-  'mongodb+srv://faroukhamadi:16042002farouk@cluster0.fr3yi.mongodb.net/inventory_application?retryWrites=true&w=majority';
-
-const MongoDB = process.env.MONGODB_URI || dev_db_url;
+const MongoDB = process.env.MONGODB_URI || process.env.DEV_DB_URL;
 
 mongoose.connect(MongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
