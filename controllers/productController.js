@@ -89,7 +89,7 @@ exports.product_create_post = [
 
   // Process request after validation and sanitization
   (req, res, next) => {
-    // Extract tje validation errors from request
+    // Extract the validation errors from request
     const errors = validationResult(req);
 
     // Create a product object with escaped and trimmed data
